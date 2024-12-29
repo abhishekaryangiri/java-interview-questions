@@ -164,6 +164,81 @@ Java Design Patterns are divided into three categories – creational, structura
 
 ## Q. Explain Singleton Design Pattern in Java?
 
+The Singleton Design Pattern ensures that a class has **only one instance** throughout the application's lifecycle and provides a **global access point** to that instance. This is particularly useful when having multiple instances could lead to problems or inefficiencies.
+
+### **Why Use Singleton?**
+1. **Resource Control**: Some resources, like databases or file systems, should only have a single point of control to avoid conflicts.
+2. **Consistency**: A single, shared instance ensures uniform behavior across the application.
+3. **Global Access**: The Singleton provides a way to access the single instance globally without recreating it.
+
+---
+
+### **Key Components of Singleton**
+1. **Private Constructor**: 
+   - The class’s constructor is private to prevent direct instantiation using the `new` keyword.
+   - This ensures that no external code can create additional instances.
+
+2. **Static Instance Variable**:
+   - A static variable holds the single instance of the class. 
+   - Since it’s static, it belongs to the class and not any individual object, ensuring that only one instance exists.
+
+3. **Public Static Method**:
+   - This method provides a controlled way to access the single instance.
+   - It creates the instance lazily (only when needed) and ensures no additional instances are created.
+
+---
+
+### **Detailed Example**
+Here’s a step-by-step example:
+
+```java
+public class Singleton {
+
+    // Step 1: Declare a static variable to hold the single instance
+    private static Singleton instance;
+
+    // Step 2: Make the constructor private to prevent direct instantiation
+    private Singleton() {
+        System.out.println("Singleton instance created!");
+    }
+
+    // Step 3: Provide a public static method to access the instance
+    public static Singleton getInstance() {
+        // Step 4: Create the instance only if it doesn’t exist
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance; // Return the single instance
+    }
+}
+```
+
+---
+
+### **How It Works**
+1. The first time `getInstance()` is called, it checks if `instance` is null.
+2. If null, it creates a new `Singleton` object and assigns it to `instance`.
+3. Subsequent calls to `getInstance()` return the same `instance` without creating a new one.
+
+---
+
+### **Advantages**
+- **Controlled Access**: Only one instance is created and managed.
+- **Lazy Initialization**: The instance is created only when required.
+- **Efficient Resource Use**: Prevents unnecessary duplication of heavy resources.
+
+### **Disadvantages**
+- **Global State**: Sharing one instance can introduce unintended dependencies across parts of the application.
+- **Thread-Safety**: In multithreaded environments, additional precautions (e.g., synchronized methods) are required to ensure only one instance is created.
+
+---
+
+### **When to Use Singleton?**
+- Logging mechanisms.
+- Configuration settings.
+- Database connections.
+- Thread pools.
+
 **1. Eager initialization:**  
 In eager initialization, the instance of Singleton Class is created at the time of class loading.
 
